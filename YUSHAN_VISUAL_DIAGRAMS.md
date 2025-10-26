@@ -326,23 +326,23 @@ sequenceDiagram
     
     CS->>KAFKA: Publish NovelCreatedEvent
     
-    rect over ENG,GAM,ANA
-        Note right: Parallel Event Consumption
+    Note over ENG,ANA: Event Consumers Process in Parallel
+    
+    par Parallel Event Consumption
+        KAFKA->>ENG: Consume novel-events
+        ENG->>ENG: Update reading recommendations
+        ENG->>ENG: Notify followers
+    and
+        KAFKA->>GAM: Consume novel-events
+        GAM->>GAM: Award "Content Creator" achievement
+        GAM->>GAM: Add points to user
+        GAM->>GAM: Update leaderboard
+    and
+        KAFKA->>ANA: Consume novel-events
+        ANA->>ANA: Track publishing metrics
+        ANA->>ANA: Update content rankings
+        ANA->>ANA: Calculate author statistics
     end
-    
-    KAFKA->>ENG: Consume novel-events
-    ENG->>ENG: Update reading recommendations
-    ENG->>ENG: Notify followers
-    
-    KAFKA->>GAM: Consume novel-events
-    GAM->>GAM: Award "Content Creator" achievement
-    GAM->>GAM: Add points to user
-    GAM->>GAM: Update leaderboard
-    
-    KAFKA->>ANA: Consume novel-events
-    ANA->>ANA: Track publishing metrics
-    ANA->>ANA: Update content rankings
-    ANA->>ANA: Calculate author statistics
     
     CS-->>GW: Return novel with ID and image URL
     GW-->>UI: HTTP 201 Created
