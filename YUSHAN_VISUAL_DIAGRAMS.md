@@ -326,7 +326,9 @@ sequenceDiagram
     
     CS->>KAFKA: Publish NovelCreatedEvent
     
-    Note over ENG,GAM,ANA: Parallel Event Consumption
+    rect over ENG,GAM,ANA
+        Note right: Parallel Event Consumption
+    end
     
     KAFKA->>ENG: Consume novel-events
     ENG->>ENG: Update reading recommendations
